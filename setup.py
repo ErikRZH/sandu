@@ -19,8 +19,8 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='sandu',  # Required
-    version='0.0.1',  # Required
-    description='High Level Sensitivity and Uncertainty Analysis Tools.',  # Optional
+    version='0.0.2',  # Required
+    description='High Level Sensitivity and Uncertainty (SandU) Analysis Tools.',  # Optional
     long_description=long_description,  # Optional
     long_description_content_type='text/markdown',  # Optional (see note above)
     url='https://github.com/ErikRZH/sandu',  # Optional
@@ -28,7 +28,7 @@ setup(
     author_email='erik.rydow@eng.ox.ac',  # Optional
     classifiers=[  # Optional
 
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
         'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',
