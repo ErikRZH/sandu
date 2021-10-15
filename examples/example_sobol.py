@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from sandu.sensitivity_analysis import sobol
 """
-Calcualates, prints and plots the Sobol sensitivity indicies from the the data in parameters_output.csv.
+Calcualates, prints and plots the Sobol sensitivity indices from the the data in parameters_output.csv.
 """
 
 df = pd.read_csv("parameters_output.csv")
@@ -20,9 +20,9 @@ quantity_varaince = "total_deaths_variance"  # Name of the column containing the
 
 N = 2 ** 12 # Note: Must be a power of 2.  (N*(2D+2) parameter value samples are used in the Sobol analysis.
 
-Si_df = sobol.get_indicies(df, parameters, bounds, quantity_mean, quantity_varaince, N)  # Perform analysis
+Si_df = sobol.get_indices(df, parameters, bounds, quantity_mean, quantity_varaince, N)  # Perform analysis
 
-print("The first and total order Sobol sensitivity indicies, and their 95% confidence intervals, are: ")
+print("The first and total order Sobol sensitivity indices, and their 95% confidence intervals, are: ")
 print(Si_df)
 
 labels = Si_df.index.values
