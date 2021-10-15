@@ -50,7 +50,7 @@ def salteli_with_constant_bounds(problem_in: dict, N_in: int) -> Tuple[np.ndarra
     return X_sample, problem_variables
 
 
-def get_indicies(df_in: pd.DataFrame, params_in: list, bounds_in: list, quantity_mean_in: str,
+def get_indices(df_in: pd.DataFrame, params_in: list, bounds_in: list, quantity_mean_in: str,
                                  quantity_variance_in: str, N_in: int) -> pd.DataFrame:
     """
 
@@ -68,7 +68,7 @@ def get_indicies(df_in: pd.DataFrame, params_in: list, bounds_in: list, quantity
             N*(2D+2) samples are generated where D is the number of non-constant parameters.
 
     Returns:
-        df_out: Dataframe containing 1st and total order sensitivity indicies,
+        df_out: Dataframe containing 1st and total order sensitivity indices,
             and associated 95% confidence intervals.
     """
     # Set up problem dictionary,as needed by SALib
