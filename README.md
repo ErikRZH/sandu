@@ -45,12 +45,12 @@ Where `Si_df` is a pandas dataframe with the first and total sensitivity indicie
 ## (1.i) Computing Sobol indices
 Running  `/examples/example_sobol.py` analyses the parameter sensitivities  from `parameters_output.csv` and produces a plot which should appear as below.
 
-![github-small](images/example_sobol.png)
+![alt text](images/example_sobol.png)
 
 ## (2) Training and evaluating a Gaussian Process Emulator. 
 Running `/example/example_gaussian_process_emulator.py` trains a model on `parameters_output.csv` and plot the models test set performance. It should produce a plot as below.
 
-![github-small](images/example_gaussian_process_emulator.png)
+![alt text](images/example_gaussian_process_emulator.png)
 
 # Credits
 * [SALib](http://salib.github.io/SALib/)
