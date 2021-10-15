@@ -19,8 +19,10 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='sandu',  # Required
-    version='0.0.3',  # Required
+
+    version='0.0.4',  # Required
     description='High Level Sensitivity and Uncertainty (SandU) Analysis Tools.',  # Optional
+
     long_description=long_description,  # Optional
     long_description_content_type='text/markdown',  # Optional (see note above)
     url='https://github.com/ErikRZH/sandu',  # Optional
