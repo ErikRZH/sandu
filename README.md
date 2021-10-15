@@ -1,20 +1,12 @@
 # sandu ![](https://img.shields.io/pypi/v/sandu) ![](https://img.shields.io/badge/python-%3E%3D3.6-blue) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
----
-
 *High Level Sensitivity and Uncertainty (SandU) analysis tools for python.*
 
-
-
 ## *Sandu aims to provide high level functionality for sensitivity and uncertainty analysis.*
-
----
 
 Sandu was developed to provide Sensitivity and Uncertainty analysis functionality for the [rampvis-api](https://github.com/ScottishCovidResponse/rampvis-api).
 
 ## Installation
-
----
 
 The package is named `sandu` and listed on [PyPI](https://pypi.org/project/sandu/). You can use the pip to install:
 
@@ -27,9 +19,6 @@ python3 -m pip install sandu
 py -m pip install sandu
 ```
 ## Description
-
----
-
 
 The motivation is to provide easy to use, end to end, sensitivity analysis and uncertainty quantification functionality. Thereby lowering the barrier of entry for this type of analysis in python. Sandu was developed to analyse agent based models but may be applied more generally to any model or experimental data.
 
@@ -46,16 +35,12 @@ Where `Si_df` is a pandas dataframe with the first and total sensitivity indicie
 
 ## Contents
 
----
-
 1. **Sensitivity Analysis Algorithms**
     1. **Sobol Sensitivity Analysis**
 2. **Gaussian Process Emulator**
 
 
 # Examples
-
----
 
 ## (1.i) Computing Sobol indices
 Running  `/examples/example_sobol.py` analyses the parameter sensitivities  from `parameters_output.csv` and produces a plot which should appear as below.
@@ -68,8 +53,6 @@ Running `/example/example_gaussian_process_emulator.py` trains a model on `param
 ![alt text](images/example_gaussian_process_emulator.png)
 
 # Credits
-
----
 
 * [SALib](http://salib.github.io/SALib/)
 * [scikit-learn](https://scikit-learn.org/stable/)
