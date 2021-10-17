@@ -1,4 +1,5 @@
 .idea
 dist
 src/sandu.egg*
-
+docs
+*.pyc
