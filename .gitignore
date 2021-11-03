@@ -2,4 +2,9 @@
 dist
 src/sandu.egg*
 docs
+<<<<<<< Updated upstream
 *.pyc
+=======
+**/__pycache__/
+
+>>>>>>> Stashed changes

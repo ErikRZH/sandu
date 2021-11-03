@@ -89,5 +89,4 @@ def get_indices(df_in: pd.DataFrame, params_in: list, bounds_in: list, quantity_
     total_Si, first_Si, second_Si = Si.to_df()
 
     df_out = pd.concat([first_Si, total_Si], axis=1)
-    df_out.index.name = "Parameter"
     return df_out

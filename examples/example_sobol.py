@@ -21,6 +21,7 @@ quantity_varaince = "total_deaths_variance"  # Name of the column containing the
 N = 2 ** 12 # Note: Must be a power of 2.  (N*(2D+2) parameter value samples are used in the Sobol analysis.
 
 Si_df = sobol.get_indices(df, parameters, bounds, quantity_mean, quantity_varaince, N)  # Perform analysis
+Si_df.index.name = "Parameter"
 
 print("The first and total order Sobol sensitivity indices, and their 95% confidence intervals, are: ")
 print(Si_df)
