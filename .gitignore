@@ -4,3 +4,4 @@ src/sandu.egg*
 docs
 *.pyc
 **/__pycache__/
+examples/new*

@@ -20,7 +20,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 setup(
     name='sandu',  # Required
 
-    version='0.0.6',  # Required
+    version='0.0.9',  # Required
     description='High Level Sensitivity and Uncertainty (SandU) Analysis Tools.',  # Optional
 
     long_description=long_description,  # Optional
@@ -37,7 +37,7 @@ setup(
         'Programming Language :: Python :: 3.8',
 
     ],
-    keywords= ['sensitivity-analysis', 'ensemble-analysis', 'uncertainty-analysis', 'uncertainty-quantification',
+    keywords=['sensitivity-analysis', 'ensemble-analysis', 'uncertainty-analysis', 'uncertainty-quantification',
                'analysis-of-mathematical-models'],  # Optional
 
     # When your source code is in a subdirectory under the project root, e.g.
