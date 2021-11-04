@@ -33,21 +33,33 @@ Si_df = sobol.get_indices(df, parameters, bounds, quantity_mean, quantity_varain
 ```
 Where `Si_df` is a pandas dataframe with the first and total sensitivity indicies. This is shown in detail, using example data, in `/examples/example_sobol.py`.
 
+Data types to bundle the data needed for sensitivity analysis into a sensitivity input object are included. This allows saving input data for sensitivity analysis as JSON files. While the use of this data type is voluntary, it is designed to ease the integration of the sensitivity analysis algorithms in a data processing pipeline. The advantages are illustrated in the Sobol analysis examples (1.i).
 ## Contents
 
 1. **Sensitivity Analysis Algorithms**
     1. **Sobol Sensitivity Analysis**
-2. **Gaussian Process Emulator**
+2. **Data Types**
+    1. **Sensitivity Input Data Object**
+3. **Gaussian Process Emulator**
 
 
 # Examples
 
 ## (1.i) Computing Sobol indices
-Running  `/examples/example_sobol.py` analyses the parameter sensitivities  from `parameters_output.csv` and produces a plot which should appear as below.
+Two examples of computing Sobol indices from the same data are included, (a) one where the data is read from a CSV and additional parameters supplied by hand and (b) one using a sensitivity input object to streamline the process.
+
+(a) Running  `/examples/example_sobol.py` analyses the parameter sensitivities from `parameters_output.csv` and produces a plot which should appear as below.
 
 ![alt text](images/example_sobol.png)
 
-## (2) Training and evaluating a Gaussian Process Emulator. 
+(b) The same analysis is performed in `/examples/example_sobol_sensitivity_input.py` but using a sensitivity input object `sensitivity_input.json`, thus removing the need to specify the parameter names, bounds, etc. manually.
+## (2.i) Creating and Saving a SensitivityInput Object
+A sensitivity input object is an object which contains all the information needed to perform sensitivity analysis. It is not necessary to use sensitivity input objects as the two examples of calculating Sobol sensitivity show.
+This means that in addition to the parameter-output data, a sensitivity input object contains the names and bounds of the parameters of the model in question and the name of the model output and output variance.
+Sensitivity input objects can be stored using JSON and allows all the input data needed for sensitivity analysis to be stored in one place. 
+An example of creating, saving and loading a sensitivity input object is found in `/examples/example_make_and_load_sensitivity_input.py`, which creates a sensitivity input object from `parameters_output.csv` and saves it to `new_sensitivity_input.json`.
+
+## (3) Training and evaluating a Gaussian Process Emulator. 
 Running `/example/example_gaussian_process_emulator.py` trains a model on `parameters_output.csv` and plot the models test set performance. It should produce a plot as below.
 
 ![alt text](images/example_gaussian_process_emulator.png)
