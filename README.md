@@ -54,7 +54,7 @@ Two examples of computing Sobol indices from the same data are included, (a) one
 ![alt text](images/example_sobol.png)
 
 (b) The same analysis is performed in `/examples/example_sobol_sensitivity_input.py` but using a sensitivity input object `sensitivity_input.json`, thus removing the need to specify the parameter names, bounds, etc. manually.
-## (2.i) Creating and Saving a SensitivityInput Object
+## (2.i) Creating and Saving a Sensitivity Input Object
 A sensitivity input object is an object which contains all the information needed to perform sensitivity analysis. It is not necessary to use sensitivity input objects as the two examples of calculating Sobol sensitivity show.
 This means that in addition to the parameter-output data, a sensitivity input object contains the names and bounds of the parameters of the model in question and the name of the model output and output variance.
 Sensitivity input objects can be stored using JSON and allows all the input data needed for sensitivity analysis to be stored in one place. 
