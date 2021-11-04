@@ -33,7 +33,8 @@ Si_df = sobol.get_indices(df, parameters, bounds, quantity_mean, quantity_varain
 ```
 Where `Si_df` is a pandas dataframe with the first and total sensitivity indicies. This is shown in detail, using example data, in `/examples/example_sobol.py`.
 
-Data types to bundle the data needed for sensitivity analysis into a sensitivity input object are included. This allows saving input data for sensitivity analysis as JSON files. While the use of this data type is voluntary, it is designed to ease the integration of the sensitivity analysis algorithms in a data processing pipeline. The advantages are illustrated in the Sobol analysis examples (1.i).
+**Data Types**
+A sensitivity input class is included, this allows the user to bundle data needed for sensitivity analysis into objects and saved as JSON files. While the use of sensitivity input objects is voluntary, they are included to ease the integration of the sensitivity analysis algorithms in a data processing pipeline. The advantages of using sensitivity input objects are illustrated in the Sobol analysis examples (1.i).
 ## Contents
 
 1. **Sensitivity Analysis Algorithms**
