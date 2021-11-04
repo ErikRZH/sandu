@@ -9,7 +9,7 @@ Example of Sobol sensitivity analysis using data from a SensitivityInput object.
 Calculates prints and plots the Sobol sensitivity indices from the the data in example_sensitivity_input.json.
 """
 
-with open("example_sensitivity_input.json", "r") as read_file:
+with open("sensitivity_input.json", "r") as read_file:
     x = json.load(read_file, object_hook=lambda d: SensitivityInput(**d))
 
 N = 2 ** 12 # Note: Must be a power of 2.  (N*(2D+2) parameter value samples are used in the Sobol analysis.
