@@ -8,6 +8,8 @@ from .gaussian_process_emulator import split_training_test_set, train_GP_emulato
 
 from .import sensitivity_analysis
 
+from .data_types import SensitivityInput
+
 __all__ = ["split_training_test_set",
            "train_GP_emulator",
            "predict_GP_emulator",
@@ -15,6 +17,6 @@ __all__ = ["split_training_test_set",
            "train_and_predict",
            "form_training_set",
            "form_test_set",
-           "sensitivity_analysis"
-
+           "sensitivity_analysis",
+           "SensitivityInput"
 ]
