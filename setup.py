@@ -37,7 +37,7 @@ setup(
         'Programming Language :: Python :: 3.8',
 
     ],
-    keywords= ['sensitivity-analysis', 'ensemble-analysis', 'uncertainty-analysis', 'uncertainty-quantification',
+    keywords=['sensitivity-analysis', 'ensemble-analysis', 'uncertainty-analysis', 'uncertainty-quantification',
                'analysis-of-mathematical-models'],  # Optional
 
     # When your source code is in a subdirectory under the project root, e.g.

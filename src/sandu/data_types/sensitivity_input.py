@@ -3,7 +3,8 @@ import pandas as pd
 
 class SensitivityInput:
     def __init__(self, data: dict, parameters: list, bounds: list, quantity_mean: str, quantity_variance: str):
-        """
+        """Class for sensitivity analysis input data
+
         Args:
             data: Parameters and outputs for multiple model runs in JSON format.
                 The columns are columns: "self.parameters, self.quantity_mean, self.quantity_variance"
