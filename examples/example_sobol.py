@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from sandu.sensitivity_analysis import sobol
 """
-Calcualates, prints and plots the Sobol sensitivity indices from the the data in parameters_output.csv.
+Calculates, prints and plots the Sobol sensitivity indices from the the data in parameters_output.csv.
 """
 
 df = pd.read_csv("parameters_output.csv")
