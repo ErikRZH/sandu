@@ -4,7 +4,7 @@
 
 ## *Sandu aims to provide high level functionality for sensitivity and uncertainty analysis.*
 
-Sandu was developed to provide Sensitivity and Uncertainty analysis functionality for the [rampvis-api](https://github.com/ScottishCovidResponse/rampvis-api).
+Sandu was developed to provide Sensitivity Analysis and Uncertainty Quantification functionality for the [rampvis-api](https://github.com/ScottishCovidResponse/rampvis-api).
 
 ## Installation
 
@@ -39,9 +39,12 @@ A *sensitivity input* class is included. This allows the user to bundle data nee
 
 1. **Sensitivity Analysis Algorithms**
     1. **Sobol Sensitivity Analysis**
-2. **Data Types**
+2. **Uncertainty Quantification Algorithms**
+    1. **Mean Time Series**
+3. **Data Types**
     1. **Sensitivity Input**
-3. **Gaussian Process Emulator**
+    2. **Uncertainty Input**
+4. **Gaussian Process Emulator**
 
 
 # Examples
@@ -53,14 +56,24 @@ Two examples of computing Sobol indices from the same data are included, (a) one
 
 ![alt text](images/example_sobol.png)
 
-(b) The same analysis is performed in `/examples/example_sobol_sensitivity_input.py` but using a sensitivity input object `sensitivity_input.json`, thus removing the need to specify the parameter names, bounds, etc. manually.
-## (2.i) Creating and Saving a Sensitivity Input Object
+(b) The same analysis is performed in `/examples/example_sobol_sensitivity_input.py` but using a sensitivity input object `sensitivity_input.json`, removing the need to specify the parameter names, bounds, etc. manually.
+## (2.i) Mean Time Series from Ensemble
+An example of computing the mean time series from the ensemble of time series, and then plotting the entire ensemble with the mean overlaid is included in `/examples/example_mean_all_time_series.py`. Where the width and shape of the band formed by the ensemble members in relation to the mean line reveal uncertainty in the model predictions. The resulting plot should appear as below.
+
+![alt text](images/example_mean_time_series.png)
+
+This example analyses the UncertaintyInput object stored in `uncertainty_input.json`, which contains the ensemble of time series in `uncertainty_example_data.csv` in addition to the metadata needed to parse this for uncertainty quantification. Forming an UncertaintyInput from `uncertainty_example_data.csv` is shown in `/examples/example_make_and_load_sensitivity_input.py`.
+
+## (3.i) Creating and Saving a Sensitivity Input Object
 A *sensitivity input object* is an object which contains all the information needed to perform sensitivity analysis. It is not necessary to use sensitivity input objects as the two examples of calculating Sobol sensitivity show.
 This means that in addition to the parameter-output data, a sensitivity input object contains the names and bounds of the parameters of the model in question and the name of the model output and output variance.
 Sensitivity input objects can be stored using JSON and allows all the input data needed for sensitivity analysis to be stored in one place. 
-An example of creating, saving and loading a sensitivity input object is found in `/examples/example_make_and_load_sensitivity_input.py`, which creates a sensitivity input object from `parameters_output.csv` and saves it to `new_sensitivity_input.json`.
+An example of creating, saving and loading a sensitivity input object is found in `/examples/example_make_and_load_sensitivity_input.py`, which creates a sensitivity input object from `uncertainty_example_data.csv` and saves it to `new_uncertainty_input.json`.
 
-## (3) Training and evaluating a Gaussian Process Emulator. 
+## (3.ii) Creating and Saving an Uncertainty Input Object
+A *uncertainty input object* is an object which contains the data needed by uncertainty quantification algorithms. These objects are the uncertainty quantification counterpart of *sensitivity input objects*. Thus, allowing one to apply any uncertainty quantification algorithm to the same data easily. 
+An example of creating, saving and loading a uncertainty input object is found in `/examples/example_make_and_load_uncertainty_input.py`, which creates a sensitivity input object from `parameters_output.csv` and saves it to `new_sensitivity_input.json`.
+## (4) Training and evaluating a Gaussian Process Emulator. 
 Running `/example/example_gaussian_process_emulator.py` trains a model on `parameters_output.csv` and plot the models test set performance. It should produce a plot as below.
 
 ![alt text](images/example_gaussian_process_emulator.png)
