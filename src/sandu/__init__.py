@@ -7,7 +7,7 @@ from .gaussian_process_emulator import split_training_test_set, train_GP_emulato
     evaluate_GP_emulator, train_and_predict, form_training_set, form_test_set
 
 from . import sensitivity_analysis
-
+from . import uncertainty_quantification
 from . import data_types
 
 __all__ = ["split_training_test_set",
@@ -18,5 +18,6 @@ __all__ = ["split_training_test_set",
            "form_training_set",
            "form_test_set",
            "sensitivity_analysis",
+           "uncertainty_quantification",
            "data_types"
            ]
