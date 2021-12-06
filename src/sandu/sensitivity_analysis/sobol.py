@@ -6,16 +6,16 @@ from typing import Tuple
 
 from .. import gaussian_process_emulator as gpe
 
-def salteli_with_constant_bounds(problem_in: dict, N_in: int) -> Tuple[np.ndarray, dict]:
+def saltelli_with_constant_bounds(problem_in: dict, N_in: int) -> Tuple[np.ndarray, dict]:
     """
 
     Takes as input a problem dictionary, which may include constants(!), and an integer N.
-    Returns a Saletli sampling of the parameters, ignoring the constants, as a (D,N*(2D+2)) numpy array,
+    Returns a Saltelli sampling of the parameters, ignoring the constants, as a (D,N*(2D+2)) numpy array,
     and the problem dictionary with constants removed
 
     Arg:
         problem_in: Problem dictionary (keys: 'num_vars', 'names', 'bounds') which may contain constants.
-        N_in: N used to determine number of parameter samples in Salteli sampling.  Note: Must be power of 2.
+        N_in: N used to determine number of parameter samples in Saltelli sampling.  Note: Must be power of 2.
 
     Returns:
         X_sample: Parameter values to be sampled in Sobol sensitivity analysis.
@@ -77,7 +77,7 @@ def get_indices(df_in: pd.DataFrame, params_in: list, bounds_in: list, quantity_
                    'bounds': bounds_in}
 
     # generates N*(2D+2) samples, where N is argument D is number of non-constant variables
-    X, problem_reduced = salteli_with_constant_bounds(problem_all, N_in)
+    X, problem_reduced = saltelli_with_constant_bounds(problem_all, N_in)
 
     # Train and Sample Gaussian Process emulator at points
     y = gpe.train_and_predict(df_in, params_in, quantity_mean_in, quantity_variance_in, X)
