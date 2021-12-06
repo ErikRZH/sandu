@@ -1,4 +1,5 @@
 import pandas as pd
+import ujson
 
 
 class SensitivityInput:
@@ -21,6 +22,19 @@ class SensitivityInput:
         self.data = data
 
     def df(self) -> pd.DataFrame:
-        """"Returns self.data as a pandas dataframe
+        """"Returns self.data as a pandas dataframe.
+        If the "quantity_mean" and "quantity  variance" entries are strings containing lists, ie. "[1,2,3,...]" then
+        they are converted into python lists and added to the dataframe.
+        Thus, time series when stored as lists in the dataframe's output columns are handled correctly.
         """
-        return pd.read_json(self.data, orient='split')
+        df = pd.read_json(self.data, orient='split')
+
+        if df[self.quantity_mean].map(type).eq(str).all() and df[self.quantity_variance].map(type).eq(str).all():
+            try:
+                temp_quantity_mean = df[self.quantity_mean].map(lambda x: ujson.loads(x), na_action='ignore')
+                temp_quantity_variance = df[self.quantity_variance].map(lambda x: ujson.loads(x), na_action='ignore')
+                df[self.quantity_mean] = temp_quantity_mean
+                df[self.quantity_variance] = temp_quantity_variance
+            except ValueError:
+                print("\"quantity_mean\", \"quantity_variance\" entries not converted: strings but not in json format")
+        return df
