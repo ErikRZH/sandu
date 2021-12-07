@@ -18,7 +18,7 @@ def get_time_series_dataset(df: pd.DataFrame, quantity_mean_in: str) -> np.ndarr
     # Catch non ts-data
     if df[quantity_mean_in].map(type).ne(list).all():
         print("Cluster Based Sensitivity analysis work by finding clusters in *Time Series*. \n"
-              "Thus, quantity_mean in the dataframe should contain *lists* corresponding to *time series*")
+              "Thus, columns: \"quantity_mean\", \"quantity_variance\" in the DataFrame should contain *lists*.")
         raise ValueError("quantity_mean column's contents not of type: list")
 
     nr_of_runs = df.shape[0]
