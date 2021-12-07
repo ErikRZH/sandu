@@ -147,7 +147,7 @@ def train_and_predict(df_in: pd.DataFrame, params_in: list, quantity_mean_in: st
 
 def get_scalar_features(df_in: pd.DataFrame, quantity_mean_in: list, quantity_variance_in: list,
                         scalar_mean_function: Callable[[list], float],
-                        scalar_variance_function: Callable[[list], float]):
+                        scalar_variance_function: Callable[[list], float]) -> pd.DataFrame:
     """Applies functions mapping model outputs from lists to scalars.
         Since the gaussian process emulator trains on scalar outputs.
 
@@ -160,7 +160,7 @@ def get_scalar_features(df_in: pd.DataFrame, quantity_mean_in: list, quantity_va
         scalar_variance_function: Function mapping list objects in the variance column of df_in to scalars.
 
     Returns:
-        df: Dataframe with scalar entries, given by scalar_mean/variance_function, in the mean and variance columns.
+        df: Dataframe with scalar entries in the mean and variance columns, given by scalar_mean/variance_functions.
     """
     # Check if columns contain lists
     if df_in[quantity_mean_in].map(type).eq(list).all() and df_in[quantity_variance_in].map(type).eq(list).all():

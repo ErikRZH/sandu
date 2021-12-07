@@ -53,7 +53,8 @@ setup(
         'pandas',
         'sklearn',
         'SALib',
-        'matplotlib',
+        'matplotlib' >= 3.5,
+        'tslearn',
         'ujson'
 
     ],
