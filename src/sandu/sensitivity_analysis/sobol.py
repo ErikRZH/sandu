@@ -2,9 +2,10 @@ from SALib.analyze import sobol
 from SALib.sample import saltelli
 import pandas as pd
 import numpy as np
-from typing import Tuple
+from typing import Tuple, Callable
 
 from .. import gaussian_process_emulator as gpe
+
 
 def saltelli_with_constant_bounds(problem_in: dict, N_in: int) -> Tuple[np.ndarray, dict]:
     """
@@ -51,7 +52,8 @@ def saltelli_with_constant_bounds(problem_in: dict, N_in: int) -> Tuple[np.ndarr
 
 
 def get_indices(df_in: pd.DataFrame, params_in: list, bounds_in: list, quantity_mean_in: str,
-                                 quantity_variance_in: str, N_in: int) -> pd.DataFrame:
+                quantity_variance_in: str, N_in: int, scalar_mean_function: Callable[[list], float] = sum,
+                scalar_variance_function: Callable[[list], float] = sum) -> pd.DataFrame:
     """
 
     Returns Sobol indices by sampling from a gaussian process emulator trained on model data.
@@ -66,6 +68,10 @@ def get_indices(df_in: pd.DataFrame, params_in: list, bounds_in: list, quantity_
         quantity_variance_in: Name of the column containing the variance of the output quantity.
         N_in: The number used in parameter sampling, should be a power of 2.
             N*(2D+2) samples are generated where D is the number of non-constant parameters.
+        scalar_mean_function: Function mapping list objects in the mean column of df_in to scalars.
+            Default: sum()
+        scalar_variance_function: Function mapping list objects in the variance column of df_in to scalars.
+            Default: sum()
 
     Returns:
         df_out: Dataframe containing 1st and total order sensitivity indices,
@@ -79,8 +85,11 @@ def get_indices(df_in: pd.DataFrame, params_in: list, bounds_in: list, quantity_
     # generates N*(2D+2) samples, where N is argument D is number of non-constant variables
     X, problem_reduced = saltelli_with_constant_bounds(problem_all, N_in)
 
+    # If quantity_mean and quantity_variance are lists corresponding to time series, extract scalar features
+
     # Train and Sample Gaussian Process emulator at points
-    y = gpe.train_and_predict(df_in, params_in, quantity_mean_in, quantity_variance_in, X)
+    y = gpe.train_and_predict(df_in, params_in, quantity_mean_in, quantity_variance_in, X, scalar_mean_function,
+                              scalar_variance_function)
 
     # Input thereduced problem dictionary, the one with constants removed
     Si = sobol.analyze(problem_reduced, y)
