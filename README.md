@@ -39,6 +39,7 @@ A *sensitivity input* class is included. This allows the user to bundle data nee
 
 1. **Sensitivity Analysis Algorithms**
     1. **Sobol Sensitivity Analysis**
+    2. **Cluster-based Sensitivity Analysis**
 2. **Uncertainty Quantification Algorithms**
     1. **Mean Time Series**
 3. **Data Types**
@@ -48,8 +49,11 @@ A *sensitivity input* class is included. This allows the user to bundle data nee
 
 
 # Examples
+**Model Data: Scalar or Time Series**\
+*All sensitivity analysis algorithms in sandu work with both scalar and list as model outputs*. To analyse model outputs which are ordered lists of values, for example *time series*, one supplies a pandas dataframe of the same format as for scalar model outputs. The difference is that the model output cells of the dataframe contain list objects instead of scalars. 
 
-## (1.i) Computing Sobol indices
+In the examples folder, `sensitivity_input_list.json` contains a sensitivity input object with time series model output data, a time series equivalent of `/examples/sensitivity_input.json`. In all examples, changing the model output data used from times series to scalar and vice versa is possible by alternating between these files. Furthermore, changing `/parameters_output.csv` to `/parameters_output_list.csv` in `/examples/example_make_and_load_sensitivity_input.py` creates a sensitivity input object with time series model output data identical to `/examples/sensitivity_input_list.json`.
+## (1.i) Computing Sobol Indices
 Two examples of computing Sobol indices from the same data are included, (a) one where the data is read from a CSV and additional parameters supplied by hand and (b) one using a sensitivity input object to streamline the process.
 
 (a) Running  `/examples/example_sobol.py` analyses the parameter sensitivities from `parameters_output.csv` and produces a plot which should appear as below.
@@ -57,6 +61,14 @@ Two examples of computing Sobol indices from the same data are included, (a) one
 ![alt text](images/example_sobol.png)
 
 (b) The same analysis is performed in `/examples/example_sobol_sensitivity_input.py` but using a sensitivity input object `sensitivity_input.json`, removing the need to specify the parameter names, bounds, etc. manually.
+
+If the input data for Sobol index calculation have lists/time series for model outputs the default behaviour of `sobol.get_indices()` is to take the sum of the lists as the features for training and predicting using the gaussian process emulator. Alternative function mapping lists to scalars can be supplied with the `scalar_mean_function` and `scalar_variance_function` arguments. Alternatively one can modify the dataframe by hand to map the lists/time series to more involved scalar features of interest before passing it to `sobol.get_indices()`.
+## (1.ii) Cluster-based Sensitivity Analysis
+Clustering of model outputs, especially time series outputs, allows one visually judge the sensitivity to different parameters. Since, if a parameter takes similar values across clusters its impact on model behaviour is limited. In addition, cluster-based analysis allows a modeller to visualise how the sensitivity manifests on the output and what regions of parameter space is mapped to what model behaviour. Running `/examples/example_sensitivity_cluster_analysis.py` identifies clusters in the time series outputs stored in `/examples/sensitivity_input_list.json` and plots the clusters colour-coded, with the mean of each cluster overlaid, and also plots ranges of the parameters corresponding to each cluster, normalised to between 0 and 1 with the same colour scheme. This example should produce a plot as below.
+
+![alt text](images/example_cluster_analysis.png)
+
+Clustering, like all of sandu's methods, work with both lists/time series and scalars, changing `sensitivity_input_list.json` to `sensitivity_input.json` produces the same type of plot for scalar model outputs. It might be interesting to compare this example using `sensitivity_input.json`to the plot in the Sobol index example, which analyses the same model data 🙂.
 ## (2.i) Mean Time Series from Ensemble
 An example of computing the mean time series from the ensemble of time series, and then plotting the entire ensemble with the mean overlaid is included in `/examples/example_mean_all_time_series.py`. Where the width and shape of the band formed by the ensemble members in relation to the mean line reveal uncertainty in the model predictions. The resulting plot should appear as below.
 

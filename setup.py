@@ -20,7 +20,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 setup(
     name='sandu',  # Required
 
-    version='0.1.1',  # Required
+    version='0.1.2',  # Required
     description='High Level Sensitivity and Uncertainty (SandU) Analysis Tools.',  # Optional
 
     long_description=long_description,  # Optional
