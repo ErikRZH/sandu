@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from tslearn.clustering import TimeSeriesKMeans
+import collections
 
 
 def get_time_series_dataset(df: pd.DataFrame, quantity_mean_in: str) -> np.ndarray:
@@ -15,18 +16,14 @@ def get_time_series_dataset(df: pd.DataFrame, quantity_mean_in: str) -> np.ndarr
         time_series: Numpy array of the time series dataset format ts-learn takes as input.
     """
 
-    # Catch non ts-data
-    if df[quantity_mean_in].map(type).ne(list).all():
-        print("Cluster Based Sensitivity analysis work by finding clusters in *Time Series*. \n"
-              "Thus, columns: \"quantity_mean\", \"quantity_variance\" in the DataFrame should contain *lists*.")
-        raise ValueError("quantity_mean column's contents not of type: list")
-
     nr_of_runs = df.shape[0]
-    nr_of_time_samples = len(df[quantity_mean_in][0])
+    entry = df[quantity_mean_in][0]
+    nr_of_time_samples = len(entry) if isinstance(entry, collections.Sized) else 1
     # make time series dataset
     time_series = np.zeros((nr_of_runs, nr_of_time_samples, 1))
     for idx in range(nr_of_runs):
-        time_series[idx, :, 0] = df[quantity_mean_in][idx][:]
+        time_series[idx, :, 0] = df[quantity_mean_in][idx][:] if isinstance(entry, collections.Sized) else \
+            df[quantity_mean_in][idx]
     return time_series
 
 
