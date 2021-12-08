@@ -3,7 +3,7 @@ import pandas as pd
 import sklearn.gaussian_process as gp
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Callable
 import random
 
 
@@ -78,7 +78,7 @@ def predict_GP_emulator(X_in: np.ndarray, model_in: gp.GaussianProcessRegressor,
         model_in: Model to be evaluated, preferably a trained model.
         scaler_in: The Scaler associated with the trained model.
         return_std_in: Whether or not to return the standard deviation of the predictions
-        
+
     Returns:
         y_pred: Prediction of output for parameters given by X_in.
         std_out: standard deviation associated with y_pred_out (if return_std_in = True).
@@ -119,7 +119,8 @@ def evaluate_GP_emulator(X_in: np.ndarray, y_in: np.ndarray, model_in: gp.Gaussi
 
 
 def train_and_predict(df_in: pd.DataFrame, params_in: list, quantity_mean_in: str, quantity_variance_in: str,
-                      X_in: np.ndarray) -> np.ndarray:
+                      X_in: np.ndarray, scalar_mean_function: Callable[[list], float],
+                      scalar_variance_function: Callable[[list], float]) -> np.ndarray:
     """
 
     Takes training data and parameter values to be evaluated and returns the GP emulator predictions at those values.
@@ -130,17 +131,47 @@ def train_and_predict(df_in: pd.DataFrame, params_in: list, quantity_mean_in: st
         quantity_mean_in: name of the column with the mean of the model output to be analysed.
         quantity_variance_in: name of the column with the variance of the model output to be analysed.
         X_in: Numpy array with the parameters to be tested, each row being a different set of parameters.
+        scalar_mean_function: Function mapping list objects in the mean column of df_in to scalars.
+        scalar_variance_function: Function mapping list objects in the variance column of df_in to scalars.
 
     Returns:
         y_out: Gaussian process estimator predictions for each set of parameters in X_in.
     """
-    X_tr_temp, y_tr_temp, alpha_tr_temp = form_training_set(df_in, params_in, quantity_mean_in, quantity_variance_in)
+    df = get_scalar_features(df_in, quantity_mean_in, quantity_variance_in, scalar_mean_function,
+                             scalar_variance_function)
+    X_tr_temp, y_tr_temp, alpha_tr_temp = form_training_set(df, params_in, quantity_mean_in, quantity_variance_in)
     temp_model, temp_scaler = train_GP_emulator(X_tr_temp, y_tr_temp, alpha_tr_temp)
     y_out = predict_GP_emulator(X_in, temp_model, temp_scaler)
     return y_out
 
 
-def form_training_set(df_in: pd.DataFrame, params_in: list, quantity_mean_in: str, quantity_variance_in: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+def get_scalar_features(df_in: pd.DataFrame, quantity_mean_in: list, quantity_variance_in: list,
+                        scalar_mean_function: Callable[[list], float],
+                        scalar_variance_function: Callable[[list], float]) -> pd.DataFrame:
+    """Applies functions mapping model outputs from lists to scalars.
+        Since the gaussian process emulator trains on scalar outputs.
+
+    Args:
+        df_in: Dataframe of model data, each row is a different sample.
+            Columns are: parameters, output mean, output variance.
+        quantity_mean_in: Name of the column containing the mean of the output quantity.
+        quantity_variance_in: Name of the column containing the variance of the output quantity.
+        scalar_mean_function: Function mapping list objects in the mean column of df_in to scalars.
+        scalar_variance_function: Function mapping list objects in the variance column of df_in to scalars.
+
+    Returns:
+        df: Dataframe with scalar entries in the mean and variance columns, given by scalar_mean/variance_functions.
+    """
+    # Check if columns contain lists
+    if df_in[quantity_mean_in].map(type).eq(list).all() and df_in[quantity_variance_in].map(type).eq(list).all():
+        # Apply functions mapping lists to scalars to each column entry
+        df_in[quantity_mean_in] = df_in[quantity_mean_in].apply(scalar_mean_function)
+        df_in[quantity_variance_in] = df_in[quantity_variance_in].apply(scalar_variance_function)
+    return df_in
+
+
+def form_training_set(df_in: pd.DataFrame, params_in: list, quantity_mean_in: str, quantity_variance_in: str) -> Tuple[
+    np.ndarray, np.ndarray, np.ndarray]:
     """
     Forms numpy arrays from a dataframe, the numpy arrays can then be used for training a model.
 
