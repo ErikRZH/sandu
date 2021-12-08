@@ -49,7 +49,7 @@ for cluster_index in range(k):
 axs[0].set_xlabel("Day", fontsize=13)
 y_label = "Daily Cases" if time_series else "Total Cases"
 axs[0].set_ylabel(y_label, fontsize=13)
-axs[0].legend(fontsize=13, markerscale = 0)
+axs[0].legend(fontsize=13, markerscale=0)
 
 # Parameter Ranges Bar Chart
 # Get non-constant parameters and bounds
