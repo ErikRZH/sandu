@@ -42,6 +42,7 @@ A *sensitivity input* class is included. This allows the user to bundle data nee
     2. **Cluster-based Sensitivity Analysis**
 2. **Uncertainty Quantification Algorithms**
     1. **Mean Time Series**
+    2. **Confidence Intervals**
 3. **Data Types**
     1. **Sensitivity Input**
     2. **Uncertainty Input**
@@ -75,7 +76,10 @@ An example of computing the mean time series from the ensemble of time series, a
 ![alt text](images/example_mean_time_series.png)
 
 This example analyses the UncertaintyInput object stored in `uncertainty_input.json`, which contains the ensemble of time series in `uncertainty_example_data.csv` in addition to the metadata needed to parse this for uncertainty quantification. Forming an UncertaintyInput from `uncertainty_example_data.csv` is shown in `/examples/example_make_and_load_sensitivity_input.py`.
-
+## (2.ii) Confidence Intervals from Ensemble
+Sandu can calculate confidence intervals based on interquartile range IQR, at each time step for an ensemble of time series. The example in `/examples/example_confidence_intervals.py` shows how this may be done and produces a plot as below.
+![alt text](images/example_confidence_intervals.png)
+This example, just like example (2.i), analyses the UncertaintyInput object stored in `uncertainty_input.json`.
 ## (3.i) Creating and Saving a Sensitivity Input Object
 A *sensitivity input object* is an object which contains all the information needed to perform sensitivity analysis. It is not necessary to use sensitivity input objects as the two examples of calculating Sobol sensitivity show.
 This means that in addition to the parameter-output data, a sensitivity input object contains the names and bounds of the parameters of the model in question and the name of the model output and output variance.
